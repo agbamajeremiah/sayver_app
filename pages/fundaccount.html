@@ -1,0 +1,138 @@
+<template>
+    <div class="page page-withdrawasset light" data-name="withdrawasset">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back"><i class="icon material-icons">chevron_left</i></a>
+                </div>
+                <div class="title sliding">Fund Account</div>
+                <div class="right">
+                    <a href="/noticationslist/" class="link icon-only">
+                        <i class="material-icons">notifications_none</i><span class="counts"></span>
+                    </a>
+                </div>
+                <div class="title-large">
+                    <div class="title-large-text">Fund Account</div>
+                </div>
+            </div>
+        </div>
+        <div class="page-content text-align-center">
+            <div class="block">
+                <img src="img/sayvers_safe.png" alt="logo" class="logo-small">
+                <br><br>
+                <div class="fund-input-block mt-5">
+                    <div class="list no-margin bg-none" >
+                        <ul class="no-border">
+                            <li class="item-content item-input no-padding-horizontal">
+                                <div class="item-inner no-padding-horizontal" id="proceed_text">
+                                    <!-- "item-floating-label" class on item title -->
+                                    <div class="item-title">Enter amount</div>
+                                    <div class="item-input-wrap">
+                                        <input type="number" min="0" max="1999999" name="amount" placeholder="NGN 10000" id="fund_amount">
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+                    <!-- <p class="text-mute">Enter the amount you wish to fund your account with</p> -->
+        
+                    <!-- <div class="list no-margin bg-none">
+                        <ul class="no-border">
+                            <li class="item-content item-input no-padding-horizontal">
+                                <div class="item-inner no-padding-horizontal">
+                                    "item-floating-label" class on item title
+                                    <div class="item-title">Your Transaction Pin</div>
+                                    <div class="item-input-wrap">
+                                        <input type="password" name="pin" id="tranx_pin_3">
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                    <small>Goto <a href="/setting/">settings</a> to set your transaction pin</small>
+                                </div>
+                            </li>
+                        </ul>
+                    </div> -->
+                </div>
+                <div class="action-btn-block mt-5">
+                    <button type="button" @click="submitFund" class="mt-5 button button-raised button-fill color-default">Fund Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    return {
+        data: function(){
+            return {
+                totalAsset: 50000
+            }
+        },
+
+        methods: {
+            submitFund: function(e){
+                e.preventDefault();
+                let userData = JSON.parse(localStorage.getItem('user_data'));
+                let app = this.$app;
+                let router = this.$router;
+
+                let amount = $('#fund_amount').val();
+                amount = amount*1;
+                // let tranx_pin = $('#tranx_pin_3').val();
+                // alert(amount + tranx_pin);
+
+                let req = {amount, uuid: userData.uuid, sess_token: userData.sess_token}
+
+                if(amount){
+                    app.preloader.show();
+                    promiseTimeout(60000, fundAccount(req))
+                    .then(response => {
+                        if(response.status){
+                            app.preloader.hide();
+                            var payment_link = response.data.payment_link;
+                            var tranx_ref = response.data.ref;
+                            console.log(payment_link + "+ " + tranx_ref);
+                            //open the link in browser now
+                            // $('.fund-input-block').html('');
+                            $('#fund_amount').attr('disabled','disabled');
+                            $('.input-clear-button').css('display', 'none');
+
+                            // $('#tranx_pin_3').attr('disabled','disabled');
+                              $('#proceed_text').html('<div class="item-title">Click button below to fund: NGN ' +  amount + '</div>');
+                            
+                            $('.action-btn-block').html('<a href="' + payment_link + '" rel="external" type="button" class="link external mt-5 button button-raised button-fill color-default">Proceed to Payment..</a>');
+
+
+
+                            // app.dialog.alert('Fund added successfully', 'Success', function () {
+                            //     router.back();
+                            // })
+                        }else{
+                            // console.log(response);
+                            app.preloader.hide();
+                            if(response.message === 'Incorrect pin'){
+                                app.dialog.alert('Incorrect Pin. Try again', 'Failed', function () {
+                                // router.back();
+                            })
+                            }
+                            if(response.message === 'Unauthorized access'){
+                                localStorage.clear();
+                                app.dialog.alert('Session timeout, please login again', 'Session timeout', () => {
+                                    app.views.main.router.navigate('/signin/');
+                                })
+                            }
+                        }
+                        
+                    }).catch((err) => {
+                        app.preloader.hide();
+                        app.dialog.alert(err, 'Time Out');
+                    })
+                }else{
+                    app.dialog.alert('All fields are required to complete transaction', 'Required fields')
+                }
+                
+            }
+        }
+    }
+</script>

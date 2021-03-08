@@ -1,0 +1,106 @@
+<template>
+    <div class="page page-signup o-hidden" data-name="signup">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back"><i class="icon material-icons">chevron_left</i></a>
+                </div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="row h-100 mx-0">
+                <div class="col align-self-center px-3 text-align-center align-self-center padding-horizontal-half">
+                    <form class="form-signin mb-4">
+                        <div class="list no-margin bg-none">
+                            <br><br>
+                            <ul class="no-border register">
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <!-- "item-floating-label" class on item title -->
+                                        <div class="item-title item-floating-label">First Name</div>
+                                        <div class="item-input-wrap">
+                                            <input type="text" id="reg_firstname">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <!-- "item-floating-label" class on item title -->
+                                        <div class="item-title item-floating-label">Last Name</div>
+                                        <div class="item-input-wrap">
+                                            <input type="text" id="reg_lastname">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <!-- "item-floating-label" class on item title -->
+                                        <div class="item-title item-floating-label">Email</div>
+                                        <div class="item-input-wrap">
+                                            <input type="text" id="reg_email">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <!-- "item-floating-label" class on item title -->
+                                        <div class="item-title item-floating-label">Password</div>
+                                        <div class="item-input-wrap">
+                                            <input type="password" id="reg_password">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <!-- "item-floating-label" class on item title -->
+                                        <div class="item-title item-floating-label">Confirm Password</div>
+                                        <div class="item-input-wrap">
+                                            <input type="password" id="reg_confirmpwd">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <!-- "item-floating-label" class on item title -->
+                                        <div class="item-title item-floating-label">Phone number</div>
+                                        <div class="item-input-wrap">
+                                            <input type="tel" id="reg_phone">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        <div class="form-group margin-vertical text-align-left">
+                            <label class="checkbox">
+                                <!-- checkbox input -->
+                                <input type="checkbox" id="terms" checked value="1">
+                                <!-- checkbox icon -->
+                                <i class="icon-checkbox"></i>
+                            </label>
+                            I accept <a href="/terms/">Terms and Condition</a>
+                        </div>
+                        <p class="text-center">
+                            Already have an account? <br>
+                            <a href="/signin/" class="color-white">Sign In</a> here.
+                        </p>
+                    </form>
+                    <!-- login buttons -->
+                    <div class="block">
+                        <div style="width: 120px; margin: auto">
+                            <button id="registerBtn" class="button button-raised button-fill color-default">Continue</button>
+                        </div>
+                    </div>
+                    <!-- login buttons -->
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</template>

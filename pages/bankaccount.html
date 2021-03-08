@@ -1,0 +1,97 @@
+<div class="page page-thankyou light" data-name="bankaccount">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" class="link back"><i class="icon material-icons">chevron_left</i></a>
+            </div>
+            <div class="title sliding">Bank Account</div>
+            <div class="right">
+                <a href="/noticationslist/" class="link icon-only">
+                    <i class="material-icons">notifications_none</i><span class="counts"></span>
+                </a>
+            </div>
+            <div class="title-large">
+                <div class="title-large-text">Bank Account</div>
+            </div>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="block">
+            <div class="card mb-4 shadow">
+                <div class="card-content card-content-padding bg-none">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="text-mute my-0" style="color: #2F55D4;">Primary Account</p>
+                        </div>
+                        <div class="col-auto">
+                            <h6 class="my-0 font-weight-normal" id="current_account"></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+        <div class="row mt-5 mx-0">
+            <div class="col align-self-center px-3 text-align-center align-self-center padding-horizontal-half">
+                <form class="form-signin mb-4">
+                    <div class="text-align-left">
+                        <h6 class="card-title  text-left text-mute">
+                            Save new primary bank account
+                        </h6>
+                    </div>
+                    <div class="list no-margin bg-none">
+                        <ul class="no-border">
+                            <li class="item-content item-input no-padding-horizontal">
+                                <div class="item-inner no-padding-horizontal">
+                                    <!-- "item-floating-label" class on item title -->
+                                    <div class="item-title item-floating-label">Account Name</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="bank_account_name" id="bank_account_name">
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="item-content item-input no-padding-horizontal">
+                                <div class="item-inner no-padding-horizontal">
+                                    <!-- "item-floating-label" class on item title -->
+                                    <div class="item-title item-floating-label">Account Number</div>
+                                    <div class="item-input-wrap">
+                                        <input type="number" name="account_number" id="account_number">
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </li>
+ 
+                            <li class="item-content item-input no-padding-horizontal">
+                                <div class="item-inner no-padding-horizontal">
+                                    <!-- "item-floating-label" class on item title -->
+                                    <div class="item-title item-floating-label">Bank Name</div>
+                                    <div class="item-input-wrap">
+                                        <select   name="bank_name" id="bank_name">
+                                            <option>-- Select Bank --</option>
+                                            </select>
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="item-content item-input no-padding-horizontal">
+                                <div class="item-inner no-padding-horizontal">
+                                    <!-- "item-floating-label" class on item title -->
+                                    <div class="item-title item-floating-label">Pin</div>
+                                    <div class="item-input-wrap">
+                                        <input type="password" name="tranx_pin" id="tranx_pin">
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-5">
+                        <button type="button" id="changeaccount_number" class="button button-raised button-fill button-large button-round color-default">Update Bank Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

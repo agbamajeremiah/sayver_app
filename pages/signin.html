@@ -1,0 +1,59 @@
+<template>
+    <div class="page page-signin o-hidden" data-name="signin">
+        <div class="page-content" >
+            <div class="row h-100 mx-0">
+                <div class="col align-self-center px-3 text-align-center" style="margin-top: -120px">
+                    <h3 class="text-align-center" style="font-size: 40px; color: #000;">Welcome</h3>
+                    <img src="img/sayver-dark.png" alt="logo" class="logo-small" style="width: 125px">
+                    <form class="form-signin mb-4 mt-5" method="POST">
+                        <div class="list no-margin bg-none">
+                            <ul class="no-border">
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <!-- "item-floating-label" class on item title -->
+                                        <div class="item-title item-floating-label">Email</div>
+                                        <div class="item-input-wrap">
+                                            <input type="text" name="email" id="loginEmail">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <!-- "item-floating-label" class on item title -->
+                                        <div class="item-title item-floating-label">Password</div>
+                                        <div class="item-input-wrap">
+                                            <input type="password" name="password" id="loginPassword">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <button type="submit" id="loginButton" class="button button-raised button-fill login-button color-default">Login</button>
+                        </div>
+                        
+                    </form>              
+                </div>
+            </div>
+            <!-- login buttons -->
+            <div class="block bottom-button-container">
+                <div class="row">
+                    <div class="col text-align-center">
+                        <a href="/forgotpassword/">Forgot <br> Password?</a>
+                    </div>
+    
+                    <div class="col text-align-center">
+                        <a href="/signup/">Don't have an account? Sign up</a>
+                    </div>
+                </div>
+            </div>
+            <!-- login buttons -->
+        </div>
+    </div>
+</template>
+
+
+

@@ -1,0 +1,157 @@
+<template>
+    <div class="page page-withdrawasset light" data-name="withdrawasset">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back"><i class="icon material-icons">chevron_left</i></a>
+                </div>
+                <div class="title sliding">Withdraw All</div>
+                <div class="right">
+                    <a href="/noticationslist/" class="link icon-only">
+                        <i class="material-icons">notifications_none</i><span class="counts"></span>
+                    </a>
+                </div>
+                <div class="title-large">
+                    <div class="title-large-text">Withdraw All</div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="page-content">
+            <div class="block">
+                <div class="card mb-4 shadow">
+                    <div class="card-content card-content-padding border-bottom">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="text-mute small my-0">Total Asset Available</h5>
+                            </div>
+                            <div class="col-auto">
+                                <h5 class="mb-1 mt-0">{{totalAsset}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 px-2">
+                    <p class="text-mute my-0"></p>Withdraw to Account</p>
+                </div>
+                <div class="card shadow">
+                    <div class="card-content card-content-padding border-bottom">
+                        <div class="row">
+                            {{ account_details }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <small>Goto <a href="/bankaccount/">account settings</a> to set bank account</small>
+                </div>
+
+                <div class="list no-margin bg-none">
+                    <ul class="no-border">
+                        <li class="item-content item-input no-padding-horizontal">
+                            <div class="item-inner no-padding-horizontal">
+                                <!-- "item-floating-label" class on item title -->
+                                <div class="item-title">Enter Transaction Pin</div>
+                                <div class="item-input-wrap">
+                                    <input type="password" name="pin" id="tranx_pin_1">
+                                    <span class="input-clear-button"></span>
+                                </div>
+                                <small>Goto <a href="/setting/">settings</a> to set your transaction pin</small>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <button type="button" id="withdrawAsset" @click="submitWithdraw" class="mt-5 button button-raised button-fill color-default">Withdraw Asset</button>
+            </div>
+        </div>
+        
+    </div>
+</template>
+
+<script>
+    return {
+        data: function(){
+            let withdraw_wallet = JSON.parse(localStorage.getItem('withdraw_wallet'));
+            let walletId = withdraw_wallet.walletId;
+            let walletData = JSON.parse(localStorage.getItem('wallet_data'));
+            var withdrawWalletData = walletData.wallet.filter( wallet => {
+                return wallet.id === walletId
+            });
+            var total_wallet_funds = parseFloat(withdrawWalletData[0].earnings) + parseFloat(withdrawWalletData[0].asset);
+            let bank_details = JSON.parse(localStorage.getItem('account_details')); 
+            let account_datails =   '<div class="col">' +
+                                 '<h5 class="text-mute small my-0">No account number saved</h5>'+
+                                '</div>';
+            if(bank_details == null || bank_details == undefined){
+                console.log("No Primary accout set");
+                account_datails =   '<div class="col">' +
+                                 '<h5 class="text-mute small my-0">No account number saved</h5>'+
+                                '</div>';
+              
+            }
+            else{ 
+                  account_datails ='<div class="col">' +
+                                '<h5 class="text-mute my-0">'+ bank_details.account_number +'</h5>'+
+                                '<h5 class="text-mute small mb-1 mt-0">'+ bank_details.bank_name +'</p>' +
+                                '</div>';
+            }
+            console.log(account_datails);
+            return {
+                totalAsset: total_wallet_funds.toLocaleString('en-US', {
+                       style: 'currency',
+                       currency: 'NGN',
+                     }),
+                account_details: account_datails,
+            }
+        },
+
+        methods: {
+            submitWithdraw: function(e){
+                e.preventDefault();
+                let userData = JSON.parse(localStorage.getItem('user_data'));
+                let withdraw_wallet = JSON.parse(localStorage.getItem('withdraw_wallet'));
+                let walletId = withdraw_wallet.walletId;
+                let app = this.$app;
+                let router = this.$router;
+                let amount = parseFloat(withdraw_wallet.asset) + parseFloat( withdraw_wallet.earnings)
+                // console.log(amount);
+                let tranx_pin = $('#tranx_pin_3').val();
+                let req = {walletId : walletId, amount, tranx_pin, withdrawalType: 'earnings_asset', uuid: userData.uuid, sess_token: userData.sess_token}
+                
+                if(amount && tranx_pin){
+                    app.preloader.show();
+                    promiseTimeout(6000, withdrawFunds(req))
+                    .then(response => {
+                        localStorage.removeItem('withdraw_wallet');
+                        if(response.status){
+                            app.preloader.hide();
+                            app.dialog.alert('Transaction completed', 'Success', function () {
+                                var view = app.views.current;
+                                console.log(view.history);
+                                view.router.back('/homepage/', {force: true});
+                                // router.back();
+
+                            })
+                        }else{
+                            app.preloader.hide();
+                            if(response.message === 'Unauthorized access'){
+                                localStorage.clear();
+                                app.dialog.alert('Session timeout, please login again', 'Session timeout', () => {
+                                    app.views.main.router.navigate('/signin/');
+                                });
+                            }else{
+                                app.dialog.alert(response.message, 'Error')
+                            }
+                        }
+                        
+                    }).catch((err) => {
+                        app.preloader.hide();
+                        app.dialog.alert(err, 'Time Out');
+                    })
+                }else{
+                    app.dialog.alert('All fields are required to complete transaction', 'Required fields')
+                }
+                
+            }
+        }
+    }
+</script>
