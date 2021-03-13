@@ -1413,7 +1413,9 @@ h5 {
 h6 {
     font-size: 1rem;
 }
-
+input {
+    text-align: center;
+}
 
 .logo-small {
     width: 220px;
@@ -1466,7 +1468,9 @@ h6 {
 .list ul {
     background-color: transparent
 }
-
+.simple-list ul::after{
+    content: none;
+}
 .list ul.no-border:before,
 .list ul.no-border:after {
     display: none
@@ -1827,7 +1831,7 @@ html.with-panel-left-reveal .views {
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background: #fff;
+    background: #2F55D4;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 
@@ -2564,10 +2568,8 @@ button:focus {
 }
 
 
-/* blue color */
-.color-theme-blue .bg-template,
-.color-theme-blue .loader-screen,
-.color-theme-blue body {
+/* blue background color */
+.bg-template{
     background: #2F55D4;
     background: -moz-linear-gradient(-45deg, #2F55D4 0%, #2F55D4 100%);
     background: -webkit-gradient(left top, right bottom, color-stop(0%, #2F55D4), color-stop(100%, #2F55D4));
@@ -2577,15 +2579,28 @@ button:focus {
     background: linear-gradient(135deg, #2F55D4 0%, #2F55D4 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2F55D4', endColorstr='#2F55D4', GradientType=1);
 }
+/* White background color */
+/* .color-theme-blue .bg-template, */
+.color-theme-blue .loader-screen,
+.color-theme-blue body {
+    background: #FFF;
+    background: -moz-linear-gradient(-45deg, #FFF 0%, #FFF 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, #FFF), color-stop(100%, #FFF));
+    background: -webkit-linear-gradient(-45deg, #FFF 0%, #FFF 100%);
+    background: -o-linear-gradient(-45deg, #FFF 0%, #FFF 100%);
+    background: -ms-linear-gradient(-45deg, #FFF 0%, #FFF 100%);
+    background: linear-gradient(135deg, #FFF 0%, #FFF 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fFF', endColorstr='#FFF', GradientType=1);
+}
 
 .color-theme-blue .page {
     background: #edf3f8;
-    background: -moz-linear-gradient(top, #edf3f8 0%, #ffffff 100%);
+    background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 100);/*edf3f8*/
     background: -webkit-gradient(left top, left bottom, color-stop(0%, #edf3f8), color-stop(100%, #ffffff));
-    background: -webkit-linear-gradient(top, #edf3f8 0%, #ffffff 100%);
-    background: -o-linear-gradient(top, #edf3f8 0%, #ffffff 100%);
-    background: -ms-linear-gradient(top, #edf3f8 0%, #ffffff 100%);
-    background: linear-gradient(to bottom, #edf3f8 0%, #ffffff 100%);
+    background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 100%);
+    background: -o-linear-gradient(top, #ffffff 0%, #ffffff 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%, #ffffff 100%);
+    background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#edf3f8', endColorstr='#ffffff', GradientType=0);
     background-attachment: fixed;
     background-position: center top;
@@ -2593,9 +2608,11 @@ button:focus {
 }
 
 .color-theme-blue .bg-template,
-.color-theme-blue .nav-list.list ul li a,
 .color-theme-blue .loader-screen {
     color: #ffffff;
+}
+.color-theme-blue .nav-list.list ul li a{
+    color: #2F55D4;
 }
 
 .color-theme-blue .tabbar .toolbar-inner a.tab-link-active,
@@ -4038,7 +4055,7 @@ button:focus {
     background-color: rgb(104, 5, 104);
 }
 
-.login-button {
+.login-button, .resetpassword-button, .fund-button, .main-button {
     width: 100%;
     margin: 0px 20px;
 }

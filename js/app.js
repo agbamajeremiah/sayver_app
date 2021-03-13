@@ -462,7 +462,15 @@ $$(document).on('page:init', '.page[data-name="transactionpin"]', function (e) {
     })
 })
 
+$$(document).on('page:init', '.page[data-name="withdrawasset"]', function (e) {
+    $(".item-pin input").keyup(function() {
+        if($(this).val().length == 1) {
+            var input_flds = $(this).closest('form').find(':input');
+            input_flds.eq(input_flds.index(this) + 1).focus();
+        }
+    });
 
+})
 $$(document).on('page:init', '.page[data-name="verifypin"]', function (e) {
     $(".item-pin input").keyup(function() {
         if($(this).val().length == 1) {
@@ -541,25 +549,26 @@ $$(document).on('page:init', '.page[data-name="assets"]',function (e) {
         wallet_data.wallet.forEach(function(result) {
             // console.log(result);
             //result = ["asset": '$1,000', "profit": '$100', "asset_id": '294898798498', ]
-            if(isWithdrawPage == "true"){
-                returnData += '<li class="item-content card shadow border-2" style="margin-top: 20px; margin: 20px">  ' +
-                '<div class="item-inner text-align-left  list-asset-single" data-id="' + result.id + '"data-asset="' + result.asset + '"data-earnings="' + result.earnings + '">' +
+                returnData += '<li  style="margin-top: 20px !important;> ">  ' +
+                '<div class="card shadow border-2" style="margin: 10px">' +
+                '<div class="card-content card-content-padding  list-asset-single" data-id="' + result.id + '"data-asset="' + result.asset + '"data-earnings="' + result.earnings + '">' +
                 '<div class="item-title-row row">' +
-                '<div class="item-title col">$' + to_NGN(result.asset) + '</div>' +
-                '<div class="item-subtitle col text-align-right " style="font-size: 70%;">$' + to_NGN(result.earnings)  + '</div> </div>' +
+                '<div class="item-title col"><p style="color: #2F55D4 !important;text-align: left !important;font-size: 18px !important;">$' + to_NGN(result.asset) + '</p></div>' +
+                '<div class="item-subtitle col text-align-right" style="color: #2F55D4 !important; font-size: 70%;">$' + to_NGN(result.earnings)  + '</div> </div>' +
                 '<div class="item-subtitle text-align-right"></div>' +
+                '</div>'+
                 '</div> </li> ';
-            }
-            else{
-                returnData += '<li class="item-content card shadow border-2" style="margin-top: 20px; margin: 20px">  ' +
-                '<div class="item-inner text-align-left" data-id="' + result.id + '">' +
-                '<div class="item-title-row row">' +
-                '<div class="item-title col">$' + to_NGN(result.asset)  + '</div>' +
-                '<div class="item-subtitle col text-align-right " style="font-size: 70%;">$' + to_NGN(result.earnings)  + '</div> </div>' +
-                '<div class="item-subtitle text-align-right"><a href="/withdraw/" class="withdraw_opt withdraw-asset-btn" data-id="' + result.id +
-                 '"data-asset="' + to_NGN(result.asset)  + '"data-earnings="' + result.earnings + '">withdraw</a></div>' +
-                '</div> </li> ';
-                }
+
+                // '<li  style="margin-top: 20px !important;> ">  ' +
+                // '<div class="card shadow border-2" style="margin: 10px">' +
+                // '<div class="card-content card-content-padding  list-asset-single" data-id="' + result.id + '"data-asset="' + result.asset + '"data-earnings="' + result.earnings + '">' +
+                // '<div class="item-title-row row">' +
+                // '<div class="item-title col"><p style="color: #2F55D4 !important;text-align: left !important;font-size: 18px !important;">$' + to_NGN(result.asset) + '</p></div>' +
+                // '<div class="item-subtitle col text-align-right" style="color: #2F55D4 !important; font-size: 70%;">$' + to_NGN(result.earnings)  + '</div> </div>' +
+                // '<div class="item-subtitle text-align-right"></div>' +
+                // '</div>'+
+                // '</div> </li> ';
+           
             
         });
             
@@ -583,24 +592,18 @@ $$(document).on('page:init', '.page[data-name="assets"]',function (e) {
                 response.data.wallet.forEach(function(result) {
                     // console.log(result);
                     //result = ["asset": '$1,000', "profit": '$100', "asset_id": '294898798498', ]
-                    if(isWithdrawPage == "true"){
-                        returnData += '<li class="item-content card shadow border-2" style="margin-top: 20px; margin: 20px">  ' +
-                        '<div class="item-inner text-align-left list-asset-single" data-id="' + result.id + '"data-asset="' + result.asset + '"data-earnings="' + result.earnings +  '">' +
+    
+                        returnData +=  '<li  style="margin-top: 20px !important;> ">  ' +
+                        '<div class="card shadow border-2" style="margin: 10px">' +
+                        '<div class="card-content card-content-padding  list-asset-single" data-id="' + result.id + '"data-asset="' + result.asset + '"data-earnings="' + result.earnings + '">' +
                         '<div class="item-title-row row">' +
-                        '<div class="item-title col">$' + to_NGN(result.asset)  + '</div>' +
-                        '<div class="item-subtitle col text-align-right " style="font-size: 70%;">$' + to_NGN(result.earnings)  + '</div> </div>' +
-                        '<div class="item-subtitle text-align-right "></div>' +
+                        '<div class="item-title col"><p style="color: #2F55D4 !important;text-align: left !important;font-size: 18px !important;">$' + to_NGN(result.asset) + '</p></div>' +
+                        '<div class="item-subtitle col text-align-right" style="color: #2F55D4 !important; font-size: 70%;">$' + to_NGN(result.earnings)  + '</div> </div>' +
+                        '<div class="item-subtitle text-align-right"></div>' +
+                        '</div>'+
                         '</div> </li> ';
-                    }
-                    else{
-                        returnData += '<li class="item-content card shadow border-2" style="margin-top: 20px; margin: 20px">  ' +
-                        '<div class="item-inner text-align-left" data-id="' + result.id + '">' +
-                        '<div class="item-title-row row">' +
-                        '<div class="item-title col">$' + to_NGN(result.asset)  + '</div>' +
-                        '<div class="item-subtitle col text-align-right " style="font-size: 70%;">$' + to_NGN(result.earnings)  + '</div> </div>' +
-                        '<div class="item-subtitle text-align-right "><a href="/withdraw/" class="withdraw_opt withdraw-asset-btn" data-id="' + result.id + '"data-asset="' + result.asset + '"data-earnings="' + result.earnings + '">withdraw</a></div>' +
-                        '</div> </li> ';
-                    }
+                
+                    
                 });
                     
                 // console.log(returnData);
