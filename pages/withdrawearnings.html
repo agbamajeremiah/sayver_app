@@ -38,23 +38,33 @@
                         <div class="row">
                             {{ account_details}}
                         </div>
+                        <div class="mt-2">
+                            <small><a href="/bankaccount/">Click to update bank account</a></small>
+                        </div>
                     </div>
                 </div>
-                <div class="mb-5">
-                    <small>Goto <a href="/bankaccount/">account settings</a> to set bank account</small>
-                </div>
     
-                <div class="list no-margin bg-none">
+                <div class="list no-margin mt-5 bg-none">
                     <ul class="no-border">
                         <li class="item-content item-input no-padding-horizontal">
                             <div class="item-inner no-padding-horizontal">
                                 <!-- "item-floating-label" class on item title -->
-                                <div class="item-title">Your Transaction Pin</div>
-                                <div class="item-input-wrap">
-                                    <input type="password" name="pin" id="tranx_pin_2">
-                                    <span class="input-clear-button"></span>
+                                <h5 class="mb-2">Transaction Pin</h5>
+                                <div class="card mb-4 shadow">
+                                    <div class="card-content card-content-padding border-bottom">
+                                        <form class="pin-form">
+                                            <div class="item-pin row mb-2" style="text-align: center;">
+                                                <span class="col"><input type="password" id="pin1" class="align-center" autocomplete="new-password" maxlength="1" placeholder="*"/></span>
+                                                <span class="col"><input type="password" id="pin2" class="align-center" autocomplete="new-password" maxlength="1" placeholder="*"/></span>
+                                                <span class="col"><input type="password" id="pin3" class="align-center"  autocomplete="new-password" maxlength="1" placeholder="*"/></span>
+                                                <span class="col"><input type="password" id="pin4" class="align-center" autocomplete="new-password" maxlength="1" placeholder="*"/></span>
+                                            </div>
+                                        </form>
+                                        
+                                        <small><a href="/setting/">Click to update transaction pin</a></small>
+                                    </div>
                                 </div>
-                                <small>Goto <a href="/setting/">settings</a> to set your transaction pin</small>
+                                
                             </div>
                         </li>
                     </ul>
@@ -84,7 +94,7 @@
             if(bank_details == null || bank_details == undefined){
                 console.log("No Primary accout set");
                 account_datails =   '<div class="col">' +
-                                 '<h5 class="text-mute small my-0"  style="color: #2F55D4 !important; text-align: left !important; font-size: 18px !important;">No account number saved</h5>'+
+                                 '<h5 class="text-mute small my-0" style="color: #2F55D4 !important; text-align:left !important; font-size: 18px !important;">No account number saved</h5>'+
                                 '</div>';
               
             }
@@ -116,7 +126,13 @@
 
                 // let amount = $('#earned_amount').val();
                 let amount = withdraw_wallet.earnings;
-                let tranx_pin = $('#tranx_pin_2').val();
+                // let tranx_pin = $('#tranx_pin_2').val();s
+                let pin1 = $('#pin1').val();
+                let pin2 = $('#pin2').val()
+                let pin3 = $('#pin3').val() 
+                let pin4 = $('#pin4').val(); 
+                let tranx_pin = pin1 + pin2 + pin3 + pin4;
+                console.log(tranx_pin);
 
                 let req = {walletId: walletId, amount, tranx_pin, withdrawalType: 'earnings', uuid: userData.uuid, sess_token: userData.sess_token}
 

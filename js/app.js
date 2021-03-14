@@ -259,9 +259,10 @@ $$(document).on('page:init', '.page[data-name="notifications"]', function (e) {
             app.preloader.hide();
         })
 });
+
+
 // bankaccount
 $$(document).on('page:init', '.page[data-name="bankaccount"]', function(e){
-
     //get bank data 
     let account_details = JSON.parse(localStorage.getItem('account_details'));
     if(account_details == null || account_details == undefined){
@@ -294,7 +295,6 @@ $$(document).on('page:init', '.page[data-name="bankaccount"]', function(e){
                 //     console.log("<option value='"+bank_list_nk[i]["code"]+"'>"+bank_list_nk[i]["name"]+"    </option>");
                 // }              
             }
-          
               
       }).catch((err) => {
           app.preloader.hide();
@@ -469,7 +469,6 @@ $$(document).on('page:init', '.page[data-name="withdrawasset"]', function (e) {
             input_flds.eq(input_flds.index(this) + 1).focus();
         }
     });
-
 })
 $$(document).on('page:init', '.page[data-name="verifypin"]', function (e) {
     $(".item-pin input").keyup(function() {

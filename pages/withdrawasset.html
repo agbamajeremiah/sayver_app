@@ -52,12 +52,14 @@
                                 <h5 class="mb-2">Transaction Pin</h5>
                                 <div class="card mb-4 shadow">
                                     <div class="card-content card-content-padding border-bottom">
-                                        <div class="item-pin row mb-2" style="text-align: center;">
-                                            <span class="col"><input type="password" id="pin1"  autocomplete="new-password" maxlength="1" placeholder="*"/></span>
-                                            <span class="col"><input type="password" id="pin2"  autocomplete="new-password" maxlength="1" placeholder="*"/></span>
-                                            <span class="col"><input type="password" id="pin3"  autocomplete="new-password" maxlength="1" placeholder="*"/></span>
-                                            <span class="col"><input type="password" id="pin4"  autocomplete="new-password" maxlength="1" placeholder="*"/></span>
-                                        </div>
+                                        <form class="pin-form">
+                                            <div class="item-pin row mb-2" style="text-align: center;">
+                                                <span class="col"><input type="password" id="pin1" class="align-center" autocomplete="new-password" maxlength="1" placeholder="*"/></span>
+                                                <span class="col"><input type="password" id="pin2" class="align-center" autocomplete="new-password" maxlength="1" placeholder="*"/></span>
+                                                <span class="col"><input type="password" id="pin3" class="align-center"  autocomplete="new-password" maxlength="1" placeholder="*"/></span>
+                                                <span class="col"><input type="password" id="pin4" class="align-center" autocomplete="new-password" maxlength="1" placeholder="*"/></span>
+                                            </div>
+                                        </form>
                                         <small><a href="/setting/">Click to update transaction pin</a></small>
                                     </div>
                                 </div>
@@ -137,9 +139,9 @@
                         $('#pin2').val("")
                         $('#pin3').val("") 
                         $('#pin4').val("");
-                        localStorage.removeItem('withdraw_wallet');
                         if(response.status){
                             app.preloader.hide();
+                            localStorage.removeItem('withdraw_wallet'); 
                             app.dialog.alert('Transaction completed', 'Success', function () {
                                 
                                 var view = app.views.current;
