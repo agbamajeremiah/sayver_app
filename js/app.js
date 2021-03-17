@@ -186,6 +186,30 @@ $$(document).on('page:init', '.page[data-name="resetpwd"]', function(e){
         }
     });
 })
+//
+$$(document).on('page:init', '.page[data-name="notifications-details"]', function (e) {
+    let page_param = app.view.main.router.currentRoute.params;
+    console.log(page_param.notificationId);
+    app.preloader.show('multi');
+    let userData = JSON.parse(localStorage.getItem('user_data'));
+    fetchNotificationDetails(userData.uuid, userData.sess_token, page_param.notificationId)
+        .then(res => {
+            let item = '';
+            if(res.status){
+                item += '<div class="card-content card-content-padding">'
+                 +'<h5 class="mb-3 mt-0"><small>'+ res.data.title +
+                 '</small></h5>'
+                +'<p class="text-secondary text-mute">'
+                + res.data.message +'.</p>'
+            +'</div>';
+            }
+           
+          
+            $('#notDetails').html(item);
+            app.preloader.hide();
+        })
+});
+
 
 $$(document).on('page:init', '.page[data-name="notifications"]', function (e) {
     app.preloader.show('multi');
@@ -194,17 +218,18 @@ $$(document).on('page:init', '.page[data-name="notifications"]', function (e) {
         .then(res => {
             let item = '';
             if(res.status){
+                console.log(res.data);
                 let notifications = res.data;
                 if(notifications.length >= 1){
                     for(let i = 0; i < notifications.length; i++){
                         item += `<li style="border-bottom: 1px solid #000">
-                                        <a class="item-content">
+                                        <a href="/notificationdetails/${notifications[i].id}" class="item-content">
                                             <div class="item-inner">
                                                 <div class="row">
                                                     <div class="col pl-0">
                                                         <div class="item-title-row">
-                                                            <div class="item-title">${notifications[i].title}</div>
-                                                            <div class="item-after">${notifications[i].created_at}</div>
+                                                            <div class="item-title"  style="color: #2F55D4">${notifications[i].title}</div>
+                                                            <div class="item-after"  style="color: #2F55D4">${notifications[i].created_at}</div>
                                                         </div>
                                                         <div class="item-text">${notifications[i].message}</div>
                                                     </div>
@@ -502,7 +527,8 @@ $$(document).on('page:init', '.page[data-name="verifypin"]', function (e) {
         let pin4 = $('#pin4').val(); 
         let pin = pin1 + pin2 + pin3 + pin4;
         app.preloader.show(); 
-        console.log("i am here! 2")
+        console.log("i am here! 2");
+        console.log(pin);
 
         let req = {uuid: userData.uuid, sess_token: userData.sess_token, pin};
         if(pin1 && pin2 && pin3 && pin4 ){ 
@@ -660,24 +686,24 @@ $$(document).on('page:init', '.page[data-name="withdraw"]', function(e){
 })
 
 $$(document).on('page:init', '.page[data-name="homepage"]', function (e) {
-    // let wallet_block = document.getElementById("wallet-block");
-    // let wallet_data = JSON.parse(localStorage.getItem('wallet_data'));
-    // console.log(wallet_data.wallet);
-    
-    // $('#asset-details-btn').on('click', function (e) {
-    //     $( "#details-btn-block" ).addClass( 'hidden-asset-block');
-    //     $( "#withdraw-asset-block").removeClass( 'hidden-asset-block'); 
-    // });
-    // $('.single-wallet-block').on('click', function (e) {
-    //     console.log('yayaya');
-    //     $( "#withdraw-btn-block" ).addClass( 'hidden-asset-block');
-    //     $( "#details-asset-block").removeClass( 'hidden-asset-block'); 
-    // });
-    //Fetch acccount wallet
     let userData = JSON.parse(localStorage.getItem('user_data'));
     console.log(userData);
     let uuid = userData.uuid;
     let sess_token = userData.sess_token;
+    //Fetch unread messages count
+    promiseTimeout(5000, countNotifications(uuid, sess_token))
+    .then(response => { 
+         if(response.status){
+            document.getElementById("notifycount").innerHTML = '<span  class="counts">' + response.data + '</span>';
+                 
+        }
+            
+    }).catch((err) => {
+        console.log('Error occured');
+     })
+
+
+    //Fetch acccount wallet
     // app.preloader.show();
         promiseTimeout(5000, fetchBalance(uuid, sess_token))
         .then(response => { 

@@ -1,12 +1,15 @@
 // set to either landscape
 screen.orientation.lock('portrait');
- let base_url = "https://api.sayvers.com/api/v1/";
+//  let base_url = "https://api.sayvers.com/api/v1/";
+ let base_url = "http://localhost/sayvers/backend/api/v1/";
+
+
 
 function checkConnection(url){
 
 }
 
-function timeOut(num = 30000){
+function timeOut(num = 3000){
     setTimeout(()=>{
         app.preloader.hide();
         app.dialog.alert('Operation timed out...', 'Time Out');
@@ -206,11 +209,35 @@ function fetchNotifications(uuid, sess_token){
     return new Promise((resolve, reject) => {
         let result;
         $.ajax({
-            type: "post",
-            url: base_url + 'wallet/notifications',
+            type: "get",
+            url: base_url + 'notification/getall',
             data: {uuid, sess_token},
             success: (response) => {
                 result = response;
+                console.log( response);
+
+                // Update sess_token;
+                let userdata = JSON.parse(localStorage.getItem('user_data'));
+                if(response.sess_token){
+                    userdata.sess_token = response.sess_token;
+                }
+                localStorage.setItem('user_data', JSON.stringify(userdata));
+                
+                resolve(result);
+            }
+        })
+    })
+}
+function fetchNotificationDetails(uuid, sess_token, id){
+    return new Promise((resolve, reject) => {
+        let result;
+        $.ajax({
+            type: "get",
+            url: base_url + 'notification/getdetails',
+            data: {uuid, sess_token, id},
+            success: (response) => {
+                result = response;
+                console.log( response);
 
                 // Update sess_token;
                 let userdata = JSON.parse(localStorage.getItem('user_data'));
@@ -225,15 +252,17 @@ function fetchNotifications(uuid, sess_token){
     })
 }
 
+
 function countNotifications(uuid, sess_token){
     return new Promise((resolve, reject) => {
         let result;
         $.ajax({
-            type: "post",
-            url: base_url + 'wallet/countnotifications',
+            type: "get",
+            url: base_url + 'notification/countunread',
             data: {uuid, sess_token},
             success: (response) => {
                 result = response;
+                console.log(response);
                 // Update sess_token;
                 let userdata = JSON.parse(localStorage.getItem('user_data'));
                 if(response.sess_token){

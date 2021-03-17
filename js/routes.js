@@ -172,8 +172,9 @@ var routes = [
 		url: './pages/notificationlist.html',
 	},
 	{
-		path: '/notificationdetails/',
+		path: '/notificationdetails/:notificationId',
 		url: './pages/notificationdetails.html',
+		name: 'notificationdetails',
 	},
 	// setting page
 	{
